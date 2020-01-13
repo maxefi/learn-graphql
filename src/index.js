@@ -43,6 +43,18 @@ const resolvers = {
         return link;
       }
     },
+    deleteLink: (parent, args) => {
+      const link = links.find(link => link.id === args.id);
+
+      if (link) {
+        const filteredLinks = links.filter(link => link.id !== args.id);
+        console.log({ filteredLinks });
+
+        links = filteredLinks;
+
+        return link;
+      }
+    },
   },
 };
 
