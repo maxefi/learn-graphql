@@ -6,6 +6,8 @@ let links = [{
   description: 'Fullstack tutorial for GraphQL',
 }];
 
+let idCount = links.length;
+
 // implementation of the GraphQL schema
 // one of the core benefits of GraphQL in general:
 // It enforces that the API actually behaves in the way that is promised by the schema definition!
@@ -16,10 +18,16 @@ const resolvers = {
     info: () => null,
     feed: () => links,
   },
-  Link: {
-    id: (parent) => parent.id,
-    url: (parent) => parent.url,
-    description: (parent) => parent.description,
+  Mutation: {
+    post: (parent, args) => {
+      const link = {
+        id: `link-${idCount++}`,
+        description: args.description,
+        url: args.url,
+      };
+      links.push(link);
+      return link;
+    },
   },
 };
 
