@@ -17,6 +17,9 @@ const resolvers = {
   Query: {
     info: () => null,
     feed: () => links,
+    link: (parent, args) => links.find(link => {
+      return link.id === args.id;
+    }),
   },
   Mutation: {
     post: (parent, args) => {
