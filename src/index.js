@@ -1,19 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga');
 
-// GraphQL schema
-const typeDefs = `
-  type Query {
-    info: String!
-    feed: [Link!]!
-  }
-  
-  type Link {
-    id: ID!
-    description: String!
-    url: String!
-  }
-`
-
 let links = [{
   id: 'link-0',
   url: 'www.howtographql.com',
@@ -38,7 +24,7 @@ const resolvers = {
 };
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers,
 });
 
