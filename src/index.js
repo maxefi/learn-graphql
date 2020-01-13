@@ -17,9 +17,7 @@ const resolvers = {
   Query: {
     info: () => null,
     feed: () => links,
-    link: (parent, args) => links.find(link => {
-      return link.id === args.id;
-    }),
+    link: (parent, args) => links.find(link => link.id === args.id),
   },
   Mutation: {
     post: (parent, args) => {
@@ -28,8 +26,22 @@ const resolvers = {
         description: args.description,
         url: args.url,
       };
+
       links.push(link);
+
       return link;
+    },
+    updateLink: (parent, args) => {
+      let link = links.find(link => link.id === args.id);
+
+      if (link) {
+        const { url, description } = link;
+
+        if (url) link.url = url;
+        if (description) link.description = description;
+
+        return link;
+      }
     },
   },
 };
