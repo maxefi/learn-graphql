@@ -1,5 +1,30 @@
 const { GraphQLServer } = require('graphql-yoga');
 
+// The Prisma server provides the data access layer in your application architecture,
+// making it easy for your API server to talk to the database through Prisma.
+// The API of the Prisma server is consumed by the Prisma client
+// inside your API server implementation(similar to an ORM).
+// The API server is what you’ve started building throughout the previous chapters using graphql-yoga.
+/*
+const { prisma } = require('./generated/prisma-client');
+
+async function main() {
+
+  // Create a new Link
+  const newLink = await prisma.createLink({
+    url: 'www.prisma.io',
+    description: 'Prisma replaces traditional ORMs',
+  });
+  console.log(`Created new link: ${newLink.url} (ID: ${newLink.id})`);
+
+  // Read all links from the database and print them to the console
+  const allLinks = await prisma.links();
+  console.log({ allLinks });
+};
+
+main().catch(e => console.error({ e }));
+*/
+
 let links = [{
   id: 'link-0',
   url: 'www.howtographql.com',
