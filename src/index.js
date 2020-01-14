@@ -5,9 +5,9 @@ const { GraphQLServer } = require('graphql-yoga');
 // The API of the Prisma server is consumed by the Prisma client
 // inside your API server implementation(similar to an ORM).
 // The API server is what you’ve started building throughout the previous chapters using graphql-yoga.
-/*
 const { prisma } = require('./generated/prisma-client');
 
+/*
 async function main() {
 
   // Create a new Link
@@ -68,12 +68,15 @@ const resolvers = {
         return link;
       }
     },
+
+
   },
 };
 
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
+  context: { prisma },
 });
 
 server.start(() => console.log(`Server is running on http://localhost:4000`));
