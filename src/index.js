@@ -25,14 +25,6 @@ async function main() {
 main().catch(e => console.error({ e }));
 */
 
-let links = [{
-  id: 'link-0',
-  url: 'www.howtographql.com',
-  description: 'Fullstack tutorial for GraphQL',
-}];
-
-let idCount = links.length;
-
 // implementation of the GraphQL schema
 // one of the core benefits of GraphQL in general:
 // It enforces that the API actually behaves in the way that is promised by the schema definition!
@@ -41,23 +33,18 @@ let idCount = links.length;
 const resolvers = {
   Query: {
     info: () => null,
-    feed: () => links,
-    link: (parent, args) => links.find(link => link.id === args.id),
+    feed: (root, args, context, info) => context.prisma.links(),
+    link: (root, args, context, info) => context.prisma.links().find(link => link.id === args.id),
   },
   Mutation: {
-    post: (parent, args) => {
-      const link = {
-        id: `link-${idCount++}`,
-        description: args.description,
+    post: (root, args, context, info) => {
+      return context.prisma.createLink({
         url: args.url,
-      };
-
-      links.push(link);
-
-      return link;
+        description: args.description,
+      });
     },
-    updateLink: (parent, args) => {
-      let link = links.find(link => link.id === args.id);
+    updateLink: (root, args, context, info) => {
+      let link = context.prisma.links().find(link => link.id === args.id);
 
       if (link) {
         const { url, description } = link;
@@ -68,7 +55,8 @@ const resolvers = {
         return link;
       }
     },
-    deleteLink: (parent, args) => {
+    deleteLink: (root, args, context, info) => {
+      let links = context.prisma.links();
       const link = links.find(link => link.id === args.id);
 
       if (link) {
