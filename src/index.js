@@ -7,6 +7,11 @@ const { GraphQLServer } = require('graphql-yoga');
 // The API server is what you’ve started building throughout the previous chapters using graphql-yoga.
 const { prisma } = require('./generated/prisma-client');
 
+const Query = require('./resolvers/Query')
+const Mutation = require('./resolvers/Mutation')
+const User = require('./resolvers/User')
+const Link = require('./resolvers/Link')
+
 /*
 async function main() {
 
@@ -31,6 +36,7 @@ main().catch(e => console.error({ e }));
 // This way, everyone who has access to the GraphQL schema can always be 100% sure about the API operations
 // and data structures that are returned by the API.
 const resolvers = {
+  /*
   Query: {
     info: () => null,
     feed: (root, args, context, info) => context.prisma.links(),
@@ -68,15 +74,22 @@ const resolvers = {
         return link;
       }
     },
-
-
-  },
+    */
+    Query,
+    Mutation,
+    User,
+    Link,
 };
 
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
-  context: { prisma },
+  context: request => {
+    return {
+      ...request,
+      prisma,
+    }
+  },
 });
 
 server.start(() => console.log(`Server is running on http://localhost:4000`));
