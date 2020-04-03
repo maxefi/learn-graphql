@@ -36,45 +36,6 @@ main().catch(e => console.error({ e }));
 // This way, everyone who has access to the GraphQL schema can always be 100% sure about the API operations
 // and data structures that are returned by the API.
 const resolvers = {
-  /*
-  Query: {
-    info: () => null,
-    feed: (root, args, context, info) => context.prisma.links(),
-    link: (root, args, context, info) => context.prisma.links().find(link => link.id === args.id),
-  },
-  Mutation: {
-    post: (root, args, context, info) => {
-      return context.prisma.createLink({
-        url: args.url,
-        description: args.description,
-      });
-    },
-    updateLink: (root, args, context, info) => {
-      let link = context.prisma.links().find(link => link.id === args.id);
-
-      if (link) {
-        const { url, description } = link;
-
-        if (url) link.url = url;
-        if (description) link.description = description;
-
-        return link;
-      }
-    },
-    deleteLink: (root, args, context, info) => {
-      let links = context.prisma.links();
-      const link = links.find(link => link.id === args.id);
-
-      if (link) {
-        const filteredLinks = links.filter(link => link.id !== args.id);
-        console.log({ filteredLinks });
-
-        links = filteredLinks;
-
-        return link;
-      }
-    },
-    */
     Query,
     Mutation,
     User,
