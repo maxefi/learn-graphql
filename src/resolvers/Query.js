@@ -13,7 +13,17 @@ const feed = async (root, args, context, info) => {
     orderBy: args.orderBy,
   })
 
-  return links
+  const count = await context.prisma
+    .linksConnection({
+      where,
+    })
+    .aggregate()
+    .count()
+    
+  return {
+    links,
+    count,
+  }
 }
 
 const link = (root, args, context, info) => {
